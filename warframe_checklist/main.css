@@ -6,6 +6,10 @@ body {
 * {
     box-sizing: border-box;
 }
+
+#version {
+	float: left;
+}
 /* Remove margins and padding from the list */
 ul {
     margin: 0;
@@ -34,9 +38,7 @@ ul li {
     background: #22231D;
 }
 
-/* When clicked on, add a background color and strike out text */
 ul li.checked {
-    background: #1D1E18;
     color: #BBBBB1;
 }
 
@@ -149,19 +151,18 @@ input {
 }
 
 input:focus {
-  outline: none;
-  background-color: #49483E;
+	outline: none;
+	background-color: #49483E;
 }
 
 input::-webkit-input-placeholder{
-  color: #A0A096;
+	color: #A0A096;
 }
 
 input::-moz-placeholder{
-  color: #A0A096;
+	color: #A0A096;
 }
 
-/* Darker background-color on hover */
-ul li:hover {
-    background: #49483E;
+.item-hover {
+	background: #49483E;
 }

@@ -9,7 +9,7 @@ $(document).ready(function(){
 	function load () {
 		var myList = store.myList;
 	  if(myList) {
-		$('ul#items').html(myList);
+		makeItemArray();
 	  }
 	}
 
@@ -37,6 +37,11 @@ $(document).ready(function(){
 	//uncheck hover
 	$('ul#items li').hover(function(){
 		$(this).children().toggleClass('close-shadow');
+	});
+	
+	//item hover
+	$('ul#items li').hover(function(){
+		$(this).toggleClass('item-hover');
 	});
 
 	//uncheck
@@ -99,4 +104,38 @@ $(document).ready(function(){
 		$('ul#items li:visible:odd').addClass('stripe');
 	}
 
+	function compareStore () {
+		var storeList = store.myList;
+		var siteList = $('ul#items').html();
+		var maxList = Math.max(storeList.length, siteList.length);
+		for (i = 0; i < maxList; i++) {
+			console.log(storeList[i].html());
+			console.log(siteList[i].html());
+		}
+	}
+	
+	$('#save').click(function(){
+		//var testx = $('ul#items li').contents().not($('li').children()).text();
+		makeItemArray();
+	});
+	
+	function makeItemArray () {
+		//gets entire item list from source (probably not needed after changes to loading)
+		var itemA = [];
+		$('ul#items li').each(function(){
+			itemA.push($(this).contents().not($('li').children()).text());
+		});
+		//gets checked item list from local storage
+		var sList = store.getItem('myList');
+		var listA = [];
+		$(sList).filter('.checked').each(function() {
+			listA.push($(this).text().replace('\u00D7',''));
+		});
+		//loops through checked item list to toggle class for items in source
+		for (i = 0; i < listA.length; i++) {
+			var itemI = listA[i];
+			$('ul#items li:contains("' + itemI + '")').addClass('checked');
+		}
+	}
+		
 });
