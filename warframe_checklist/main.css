@@ -90,7 +90,6 @@ ul li.checked::before {
   width: 250px;
   float: left;
   background: #272822;
-  height: 100%;
 }
 
 .sidenav a {
