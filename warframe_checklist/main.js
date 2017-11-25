@@ -53,7 +53,7 @@ $(document).ready(function(){
 	  var thisID = $(this).attr('id');
 		$('li').not('.' + thisID).hide();
 	  $('li.' + thisID).show();
-	  //stripes();
+	  stripes();
 	});
 
 	//filter
@@ -67,7 +67,7 @@ $(document).ready(function(){
 		$('li.'+id1+'.'+id2).show();
 		$('li').not('.'+id1+'.'+id2).hide();
 		}
-	  //stripes();
+	  stripes();
 	});
 
 	//auto-select searchbar text
@@ -85,12 +85,12 @@ $(document).ready(function(){
 		});
 	  $('li').not(filtered).hide();
 	  filtered.show();
-	  //stripes();
+	  stripes();
 	});
 
 	function stripes () {
-		$('ul#items li:visible').css('background-color', '#272822');
-	  $('ul#items li:visible:odd').css('background-color','#22231D');
+		$('ul#items li:visible').removeClass('stripe');
+		$('ul#items li:visible:odd').addClass('stripe');
 	}
 
 });

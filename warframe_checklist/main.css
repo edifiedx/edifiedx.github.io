@@ -30,8 +30,7 @@ ul li {
     user-select: none;
 }
 
-/* Set all odd list items to a different color (zebra-stripes) */
-ul li:nth-child(odd) {
+.stripe {
     background: #22231D;
 }
 
