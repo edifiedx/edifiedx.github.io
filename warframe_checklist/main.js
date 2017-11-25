@@ -142,5 +142,8 @@ function updateItemArray () {
 
 function cleanStorage () {
 	var str = store.getItem('myList');
-	str = str.replace(' style=""', '').replace('<span class="close">×</span><span class="close">×</span>', '<span class="close">×</span>');
+	console.log(str);
+	str = str.replace(' style=""', '').replace('<span class="close">\u00D7</span><span class="close">\u00D7</span>', '<span class="close">\u00D7</span>');
+	console.log(str);
+	store.setItem('myList', str);
 }
