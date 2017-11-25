@@ -155,9 +155,10 @@ function buildList () {
 		$.each(data, function(key, val){
 			items.push('<li id="' + key + '">' + val + '</li>');
 		});
-		$('<ul/>', {
+		/*$('<ul/>', {
 			'class': 'my-new-list',
 			html: items.join('')
-		}).appendTo('body');
+		}).appendTo('body');*/
+		console.log(items);
 	})
 }
