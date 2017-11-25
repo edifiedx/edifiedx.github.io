@@ -2,6 +2,7 @@ $(document).ready(function(){
 
 	load();
 	stripes();
+	buildList();
 
 });
 
@@ -146,4 +147,17 @@ function cleanStorage () {
 	str = str.replace(' style=""', '').replace('<span class="close">\u00D7</span><span class="close">\u00D7</span>', '<span class="close">\u00D7</span>');
 	console.log(str);
 	store.setItem('myList', str);
+}
+
+function buildList () {
+	$.getJSON('items.json', function(data) {
+		var items = [];
+		$.each(data, function(key, val){
+			items.push('<li id="' + key + '">' + val + '</li>');
+		});
+		$('<ul/>', { 
+			'class': 'my-new-list',
+			html: items.join('')
+		}).appendTo('body');
+	})
 }
