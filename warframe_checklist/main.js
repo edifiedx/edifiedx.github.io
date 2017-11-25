@@ -152,7 +152,7 @@ function cleanStorage () {
 function buildList () {
 	$.getJSON('items.json', function(data) {
 		var items = [];
-		$.each(data, function(key, val){
+		$.each(data['itemList'], function(key, val){
 			items.push('<li id="' + key + '">' + val + '</li>');
 		});
 		/*$('<ul/>', {
