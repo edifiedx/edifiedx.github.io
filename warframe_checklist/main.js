@@ -3,6 +3,7 @@ $(document).ready(function(){
 	var store = window.localStorage;
 
 	load();
+	stripes();
 
 	//load from storage
 	function load () {
@@ -32,6 +33,11 @@ $(document).ready(function(){
 	var itemList = $('ul#items li');
 	var text = $('<span></span>').text('\u00D7').addClass('close');
 	itemList.append(text);
+	
+	//uncheck hover
+	$('ul#items li').hover(function(){
+		$(this).children().toggleClass('close-shadow');
+	});
 
 	//uncheck
 	var xClose = $('.close');
