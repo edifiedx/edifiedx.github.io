@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
 	buildList();
+	$('div#version').text('v0.2.1');
 	
 });
 
@@ -121,7 +122,7 @@ function addComponents () {
 	//var compSpan = $('<span></span>').text('\u26A0').addClass('component');
 	//compList.append(compSpan);
 	$.each(compList, function(){
-		var toolText = $(this).attr('compOf');
+		var toolText = $(this).attr('compOf').replace(/, /g,'<br>');
 		$(this).append('<span class="component">\u26A0<span class="compTip">' + toolText + '</span></span>');
 	})
 }

@@ -85,7 +85,8 @@ ul li.checked::before {
     right: 34;
     top: 0;
     padding: 12px;
-    opacity: 0.5;
+    opacity: 0.9;
+	background-color: transparent;
 }
 
 .component .compTip {
@@ -96,7 +97,7 @@ ul li.checked::before {
 	text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-	opacity: 0.9;
+	opacity: 1;
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
@@ -131,7 +132,7 @@ h1 {
 }
 
 .sidenav {
-  width: 250px;
+  width: 220px;
   float: left;
   background: #272822;
 }
@@ -174,7 +175,7 @@ h1 {
 }
 
 .main {
-  margin-left: 250px;
+  margin-left: 220px;
 }
 
 /* Style the input */
