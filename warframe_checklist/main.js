@@ -1,9 +1,8 @@
 $(document).ready(function(){
 
-	buildList();
+	buildList(load);
 	addUncheck();
 	stripes();
-	load();
 	keySearch();
 	checkItem();
 	itemHover();
@@ -20,9 +19,9 @@ var store = window.localStorage;
 //load from storage
 function load () {
 	var myList = store.myList;
-  if(myList) {
-	updateItemArray();
-  }
+	if(myList) {
+		updateItemArray();
+	}
 }
 
 //save that shit, son
@@ -36,10 +35,10 @@ function checkItem () {
 	var items = $('ul#items');
 	items.click(function(event) {
 		var target = $(event.target);
-	  if (target.is('li')){
-		target.addClass('checked');
-	  }
-	  save();
+		if (target.is('li')){
+			target.addClass('checked');
+		}
+		save();
 	});
 }
 
@@ -171,7 +170,7 @@ function cleanStorage () {
 	store.setItem('myList', str);
 }
 
-function buildList () {
+function buildList (callback) {
 	$.getJSON('items.json', function(data) {
 		$.each(data['itemList'], function(key, data){
 			$('ul#items').append('<li class="' + data['class'] + '">' + data['name'] + '</li>');
@@ -181,4 +180,5 @@ function buildList () {
 			html: items.join('')
 		}).appendTo('body');*/
 	})
+	callback();
 }
