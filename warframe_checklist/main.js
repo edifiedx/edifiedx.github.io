@@ -1,23 +1,13 @@
 $(document).ready(function(){
 
-	buildList(load);
-	addUncheck();
-	stripes();
-	keySearch();
-	checkItem();
-	itemHover();
-	uncheckHover();
-	uncheckClick();
-	autoSelect();
-	sideNav();
-	filterNav();
+	buildList();
 	
 });
 
 var store = window.localStorage;
 
 //load from storage
-function load () {
+function loadList () {
 	var myList = store.myList;
 	if(myList) {
 		updateItemArray();
@@ -25,7 +15,7 @@ function load () {
 }
 
 //save that shit, son
-function save () {
+function saveList () {
   var myList = $('ul#items').html();
 	store.setItem('myList', myList);
 }
@@ -38,7 +28,7 @@ function checkItem () {
 		if (target.is('li')){
 			target.addClass('checked');
 		}
-		save();
+		saveList();
 	});
 }
 
@@ -56,22 +46,14 @@ function uncheckHover () {
 	});
 }
 
-function itemHover() {
-	//item hover
-	$('ul#items li').hover(function(){
-		$(this).toggleClass('item-hover');
-	});
-}
-
 function uncheckClick () {
 	//uncheck
-	var xClose = $('.close');
-	xClose.click(function(event) {
+	$('.close').click(function(event) {
 		var target = $(event.target);
 	  if (target.is('span')){
 		target.parent().removeClass('checked');
 	  }
-	  save();
+	  saveList();
 	});
 }
 
@@ -170,15 +152,23 @@ function cleanStorage () {
 	store.setItem('myList', str);
 }
 
-function buildList (callback) {
+function buildList () {
 	$.getJSON('items.json', function(data) {
 		$.each(data['itemList'], function(key, data){
 			$('ul#items').append('<li class="' + data['class'] + '">' + data['name'] + '</li>');
-		});
-		/*$('<ul/>', {
-			'class': 'my-new-list',
-			html: items.join('')
-		}).appendTo('body');*/
-	})
-	callback();
+		})
+	}).done(fixCSS);
+}
+
+function fixCSS () {
+	loadList();
+	stripes();
+	addUncheck();
+	uncheckClick();
+	uncheckHover();
+	checkItem();
+	keySearch();
+	autoSelect();
+	sideNav();
+	filterNav();
 }

@@ -24,7 +24,6 @@ ul li {
     padding: 12px 8px 12px 40px;
     background: #272822;
     font-size: 18px;
-    transition: 0.2s;
     color: #E0E0D6;
 
     /* make the list items unselectable */
@@ -163,6 +162,6 @@ input::-moz-placeholder{
 	color: #A0A096;
 }
 
-.item-hover {
+ul#items li:hover {
 	background: #49483E;
 }
