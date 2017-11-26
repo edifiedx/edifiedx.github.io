@@ -1,9 +1,15 @@
 $(document).ready(function(){
 
-	load();
-	stripes();
 	buildList();
+	addUncheck();
+	stripes();
+	load();
+	keySearch();
 
+	//item hover
+	$('ul#items li').hover(function(){
+		$(this).toggleClass('item-hover');
+	});
 });
 
 var store = window.localStorage;
@@ -33,18 +39,15 @@ items.click(function(event) {
 });
 
 //add uncheck button
-var itemList = $('ul#items li');
-var text = $('<span></span>').text('\u00D7').addClass('close');
-itemList.append(text);
+function addUncheck() {
+	var itemList = $('ul#items li');
+	var text = $('<span></span>').text('\u00D7').addClass('close');
+	itemList.append(text);
+}
 
 //uncheck hover
 $('ul#items li').hover(function(){
 	$(this).children().toggleClass('close-shadow');
-});
-
-//item hover
-$('ul#items li').hover(function(){
-	$(this).toggleClass('item-hover');
 });
 
 //uncheck
@@ -90,17 +93,19 @@ $('input#filter').click(function(){
 });
 
 //search filter
-var input = $('input#filter');
-input.keyup(function(){
-	var filter = input.val().toUpperCase();
-	var filtered = $('ul#items li').filter(function() {
-		var reg = new RegExp(filter, 'ig');
-	return reg.test($(this).text())
+function keySearch(){
+	var input = $('input#filter');
+	input.keyup(function(){
+		var filter = input.val().toUpperCase();
+		var filtered = $('ul#items li').filter(function() {
+			var reg = new RegExp(filter, 'ig');
+		return reg.test($(this).text())
+		});
+	  $('li').not(filtered).hide();
+	  filtered.show();
+	  stripes();
 	});
-  $('li').not(filtered).hide();
-  filtered.show();
-  stripes();
-});
+}
 
 function stripes () {
 	$('ul#items li:visible').removeClass('stripe');
@@ -116,11 +121,6 @@ function compareStore () {
 		console.log(siteList[i].html());
 	}
 }
-
-$('#save').click(function(){
-	//var testx = $('ul#items li').contents().not($('li').children()).text();
-	makeItemArray();
-});
 
 function updateItemArray () {
 	//gets entire item list from source (probably not needed after changes to loading)
