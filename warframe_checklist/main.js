@@ -7,6 +7,8 @@ $(document).ready(function(){
 
 var store = window.localStorage;
 
+var charMap = {};
+
 //load from storage
 function loadList () {
 	var myList = store.myList;
@@ -122,8 +124,11 @@ function addComponents () {
 	//var compSpan = $('<span></span>').text('\u26A0').addClass('component');
 	//compList.append(compSpan);
 	$.each(compList, function(){
-		var toolText = $(this).attr('compOf').replace(/, /g,'<br>');
-		$(this).append('<span class="component">\u26A0<span class="compTip">' + toolText + '</span></span>');
+		var toolAttr = $(this).attr('compOf');
+		var toolText = toolAttr.replace(/, /g,'<br>');
+		var toolLeng = (toolAttr.length - toolAttr.replace(/,/g,'').length + 9312).toString(16);
+		var toolCirc = String.fromCodePoint(parseInt(toolLeng, 16));
+		$(this).append('<span class="component">' + toolCirc + '<span class="compTip">' + toolText + '</span></span>');
 	})
 }
 
