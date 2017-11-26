@@ -1,5 +1,6 @@
 body {
   background: #272822;
+  font-family: 'PT Sans', sans-serif;
 }
 
 /* Include the padding and border in an element's total width and height */
@@ -27,7 +28,7 @@ ul li {
 	color: #E0E0D6;
 	
 	display: inline-block;
-	width: 25%;
+	width: 33%;
 
 	/* make the list items unselectable */
 	-webkit-user-select: none;
@@ -115,6 +116,11 @@ ul li.checked::before {
     color: #272822;
     text-align: center;
     font-weight: bold;
+}
+
+h1 {
+	font-size: 3em;
+	margin: 16px;
 }
 
 /* Clear floats after the header */
