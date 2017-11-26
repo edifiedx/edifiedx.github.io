@@ -151,14 +151,12 @@ function cleanStorage () {
 
 function buildList () {
 	$.getJSON('items.json', function(data) {
-		var items = [];
 		$.each(data['itemList'], function(key, data){
-			items.push('<li class="' + data['class'] + '">' + data['name'] + '</li>');
+			$('ul#items').append('<li class="' + data['class'] + '">' + data['name'] + '</li>');
 		});
 		/*$('<ul/>', {
 			'class': 'my-new-list',
 			html: items.join('')
 		}).appendTo('body');*/
-		console.log(items);
 	})
 }
