@@ -152,8 +152,8 @@ function cleanStorage () {
 function buildList () {
 	$.getJSON('items.json', function(data) {
 		var items = [];
-		$.each(data['itemList'], function(key, val){
-			items.push('<li id="' + key + '">' + val + '</li>');
+		$.each(data['itemList'], function(key, data){
+			items.push('<li class="' + data['class'] + '">' + data['name'] + '</li>');
 		});
 		/*$('<ul/>', {
 			'class': 'my-new-list',
