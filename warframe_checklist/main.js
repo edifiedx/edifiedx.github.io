@@ -32,8 +32,8 @@ function checkItem () {
 	});
 }
 
-//add uncheck button
 function addUncheck() {
+	//add uncheck button
 	var itemList = $('ul#items li');
 	var text = $('<span></span>').text('\u00D7').addClass('close');
 	itemList.append(text);
@@ -115,6 +115,17 @@ function stripes () {
 	$('ul#items li:visible:odd').addClass('stripe');
 }
 
+function addComponents () {
+	//add component alert
+	var compList = $('ul#items li[compOf]');
+	//var compSpan = $('<span></span>').text('\u26A0').addClass('component');
+	//compList.append(compSpan);
+	$.each(compList, function(){
+		var toolText = $(this).attr('compOf');
+		$(this).append('<span class="component">\u26A0<span class="compTip">' + toolText + '</span></span>');
+	})
+}
+
 function compareStore () {
 	var storeList = store.myList;
 	var siteList = $('ul#items').html();
@@ -153,9 +164,21 @@ function cleanStorage () {
 }
 
 function buildList () {
-	$.getJSON('items.json', function(data) {
+	var d = new Date();
+	var n = '' + d.getHours() + d.getMinutes();
+	$.getJSON('items.json?nocache=' + n, function(data) {
 		$.each(data['itemList'], function(key, data){
-			$('ul#items').append('<li class="' + data['class'] + '">' + data['name'] + '</li>');
+			var compOf= '';
+			if (data['compOf']) {
+				var compAr = (data['compOf'])
+				$.each(compAr, function(i, l){
+					compOf += ', ' + l;
+				})
+				compOf = ' compOf="' + compOf.slice(2) + '"';
+			} else {
+				compOf = '';
+			}
+			$('ul#items').append('<li class="' + data['class'] + '"' + compOf + '>' + data['name'] + '</li>');
 		})
 	}).done(fixCSS);
 }
@@ -164,6 +187,7 @@ function fixCSS () {
 	loadList();
 	stripes();
 	addUncheck();
+	addComponents();
 	uncheckClick();
 	uncheckHover();
 	checkItem();

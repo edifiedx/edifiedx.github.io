@@ -19,18 +19,21 @@ ul {
 
 /* Style the list items */
 ul li {
-    cursor: pointer;
-    position: relative;
-    padding: 12px 8px 12px 40px;
-    background: #272822;
-    font-size: 18px;
-    color: #E0E0D6;
+	cursor: pointer;
+	position: relative;
+	padding: 12px 8px 12px 40px;
+	background: #272822;
+	font-size: 18px;
+	color: #E0E0D6;
+	
+	display: inline-block;
+	width: 25%;
 
-    /* make the list items unselectable */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+	/* make the list items unselectable */
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .stripe {
@@ -73,6 +76,36 @@ ul li.checked::before {
 .close-shadow {
   opacity: 0.5;
   background-color: #101000;
+}
+
+/* Style the component alert */
+.component {
+    position: absolute;
+    right: 34;
+    top: 0;
+    padding: 12px;
+    opacity: 0.5;
+}
+
+.component .compTip {
+    visibility: hidden;
+    background-color: #171812;
+    color: #F0F0E6;
+    width: 160px;
+	text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+	opacity: 0.9;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+.component:hover .compTip {
+	visibility: visible;
 }
 
 /* Style the header */
