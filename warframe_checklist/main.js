@@ -125,7 +125,7 @@ function addComponents () {
 	//compList.append(compSpan);
 	$.each(compList, function(){
 		var toolAttr = $(this).attr('compOf');
-		var toolText = toolAttr.replace(/, /g,'<br>');
+		var toolText = toolAttr.replace(/, /g,'<hr>');
 		var toolLeng = (toolAttr.length - toolAttr.replace(/,/g,'').length + 9312).toString(16);
 		var toolCirc = String.fromCodePoint(parseInt(toolLeng, 16));
 		$(this).append('<span class="component">' + toolCirc + '<span class="compTip">' + toolText + '</span></span>');
