@@ -24,7 +24,6 @@ ul.content-list {
 	position: static;
 }
 
-
 ul#weapon-items li,
 ul#frame-items li {
 	cursor: pointer;
@@ -36,7 +35,7 @@ ul#frame-items li {
 	overflow: hidden;
 
 	display: inline-block;
-	width: 33%;
+	width: 33.3%;
 
 	/* make the list items unselectable */
 	-webkit-user-select: none;
