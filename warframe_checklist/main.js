@@ -1,34 +1,26 @@
-$(document).ready(function(){
-
-	buildList();
-	$('div#version').text('v0.2.1');
-	
-});
+/*global $, window, document*/
 
 var store = window.localStorage;
 
-var charMap = {};
-
-//load from storage
-function loadList () {
-	var myList = store.myList;
-	if(myList) {
-		updateItemArray();
-	}
-}
-
 //save that shit, son
-function saveList () {
-  var myList = $('ul#items').html();
+function saveList() {
+	"use strict";
+	var myList = $('ul#weapon-items').html();
 	store.setItem('myList', myList);
 }
 
-function checkItem () {
+function stripes() {
+	"use strict";
+	$('ul#weapon-items li:visible, ul#frame-items li:visible').removeClass('stripe');
+	$('ul#weapon-items li:visible:odd, ul#weapon-items li:visible:odd').addClass('stripe');
+}
+
+function checkItem() {
 	//check off item
-	var items = $('ul#items');
-	items.click(function(event) {
+	"use strict";
+	$('ul#weapon-items li').click(function (event) {
 		var target = $(event.target);
-		if (target.is('li')){
+		if (target.is('li')) {
 			target.addClass('checked');
 		}
 		saveList();
@@ -37,159 +29,144 @@ function checkItem () {
 
 function addUncheck() {
 	//add uncheck button
-	var itemList = $('ul#items li');
+	"use strict";
 	var text = $('<span></span>').text('\u00D7').addClass('close');
-	itemList.append(text);
+	$('ul#weapon-items li').append(text);
 }
 
-function uncheckHover () {
+function uncheckHover() {
 	//uncheck hover
-	$('ul#items li').hover(function(){
+	"use strict";
+	$('ul#weapon-items li').hover(function () {
 		$(this).children().toggleClass('close-shadow');
 	});
 }
 
-function uncheckClick () {
+function uncheckClick() {
 	//uncheck
-	$('.close').click(function(event) {
+	"use strict";
+	$('.close').click(function (event) {
 		var target = $(event.target);
-	  if (target.is('span')){
-		target.parent().removeClass('checked');
-	  }
-	  saveList();
-	});
-}
-
-function sideNav () {
-	//navigation
-	$('a.sidenav').click(function(){
-		var thisSub = $(this).nextUntil('a.sidenav');
-	  $(this).toggleClass('navopen');
-	  $('a.sidenav').not(this).removeClass('navopen');
-		$('.side').not(thisSub).slideUp(300);
-		$(this).nextUntil('a.sidenav').slideToggle(300);
-	  var thisID = $(this).attr('id');
-		$('li').not('.' + thisID).hide();
-	  $('li.' + thisID).show();
-	  stripes();
-	});
-}
-
-function filterNav () {
-	//filter
-	$('div.side a').click(function(){
-		var id1 = $(this).parent().attr('id');
-	  var id2 = $(this).attr('id');
-	  if (id2 === "all") {
-		$('li.'+id1).show();
-		$('li').not('.'+id1).hide();
-	  } else {
-		$('li.'+id1+'.'+id2).show();
-		$('li').not('.'+id1+'.'+id2).hide();
+		if (target.is('span')) {
+			target.parent().removeClass('checked');
 		}
-	  stripes();
+		saveList();
 	});
 }
 
-function autoSelect () {
+function autoSelect() {
 	//auto-select searchbar text
-	$('input#filter').click(function(){
+	"use strict";
+	$('input#filter').click(function () {
 		$(this).select();
 	});
 }
 
-//search filter
-function keySearch(){
-	var input = $('input#filter');
-	input.keyup(function(){
+function keySearch() {
+	//search filter
+	"use strict";
+	var input = $('input.filter');
+	var inputID = input.attr('id').replace('filter', 'items');
+	input.keyup(function () {
 		var filter = input.val().toUpperCase();
-		var filtered = $('ul#items li').filter(function() {
+		var filtered = $('ul#' + inputID + ' li').filter(function () {
 			var reg = new RegExp(filter, 'ig');
-		return reg.test($(this).text())
+			return reg.test($(this).text());
 		});
-	  $('li').not(filtered).hide();
-	  filtered.show();
-	  stripes();
+		$('ul#' + inputID + ' li').not(filtered).hide();
+		filtered.show();
+		stripes();
 	});
 }
 
-function stripes () {
-	$('ul#items li:visible').removeClass('stripe');
-	$('ul#items li:visible:odd').addClass('stripe');
+function topNav() {
+	//main nav bar
+	"use strict";
+	$('#navList li').click(function () {
+		$('#navList li').removeClass('topNav-active');
+		$(this).addClass('topNav-active');
+		var targetDiv = $(this).children('a').attr('id').replace('link', 'content');
+		$('#main div.content').addClass('hidden');
+		$('div#' + targetDiv).toggleClass('hidden');
+	});
+	stripes();
 }
 
-function addComponents () {
+function subNav() {
+	//submenu filter buttons
+	"use strict";
+	$('.submenu li:not(:has(>input))').click(function () {
+		$('input').val('');
+		var thisSub = $(this).children('a').attr('id');
+		$('.submenu li').removeClass('subNav-active');
+		$(this).addClass('subNav-active');
+		var thisListID = $(this).parents('div').attr('id').replace('submenu', 'items');
+		if (thisSub === 'all') {
+			$('#' + thisListID + ' li').show();
+		} else {
+			$('#' + thisListID + ' li').not('.' + thisSub).hide();
+			$('#' + thisListID + ' li.' + thisSub).show();
+		}
+		stripes();
+	});
+	$('input').click(function () {
+		$('.submenu li').removeClass('subNav-active');
+		$(this).parent().addClass('subNav-active');
+	});
+}
+
+function addComponents() {
 	//add component alert
-	var compList = $('ul#items li[compOf]');
+	"use strict";
+	var compList = $('ul#weapon-items li[compOf]');
 	//var compSpan = $('<span></span>').text('\u26A0').addClass('component');
 	//compList.append(compSpan);
-	$.each(compList, function(){
+	$.each(compList, function () {
 		var toolAttr = $(this).attr('compOf');
-		var toolText = toolAttr.replace(/, /g,'<br>');
-		var toolLeng = (toolAttr.length - toolAttr.replace(/,/g,'').length + 9312).toString(16);
+		var toolText = toolAttr.replace(/, /g, '<br>');
+		var toolLeng = (toolAttr.length - toolAttr.replace(/,/g, '').length + 9312).toString(16);
 		var toolCirc = String.fromCodePoint(parseInt(toolLeng, 16));
 		$(this).append('<span class="component">' + toolCirc + '<span class="compTip">' + toolText + '</span></span>');
-	})
-}
-
-function compareStore () {
-	var storeList = store.myList;
-	var siteList = $('ul#items').html();
-	var maxList = Math.max(storeList.length, siteList.length);
-	for (i = 0; i < maxList; i++) {
-		console.log(storeList[i].html());
-		console.log(siteList[i].html());
-	}
-}
-
-function updateItemArray () {
-	//gets entire item list from source (probably not needed after changes to loading)
-	var itemA = [];
-	$('ul#items li').each(function(){
-		itemA.push($(this).contents().not($('li').children()).text());
 	});
-	//gets checked item list from local storage
+}
+
+function updateItemArray() {
+	//gets checked item list (name only) from local storage
+	"use strict";
 	var sList = store.getItem('myList');
 	var listA = [];
-	$(sList).filter('.checked').each(function() {
-		listA.push($(this).text().replace('\u00D7',''));
+	$(sList).filter('.checked').each(function () {
+		var thisItem = $(this).contents().filter(function () {
+			return this.nodeType === 3;
+		}).text();
+		listA.push(thisItem);
 	});
-	//loops through checked item list to toggle class for items in source
-	for (i = 0; i < listA.length; i++) {
-		var itemI = listA[i];
-		$('ul#items li:contains("' + itemI + '")').addClass('checked');
+	//loops through checked item list, matches elements, checks them off
+	$.each(listA, function (i, v) {
+		$('ul#weapon-items li').filter(function () {
+			return $(this).text() === v;
+		}).addClass('checked');
+	});
+}
+
+function loadList() {
+	//load from storage
+	"use strict";
+	var myList = store.myList;
+	if (myList) {
+		updateItemArray();
 	}
 }
 
-function cleanStorage () {
-	var str = store.getItem('myList');
-	console.log(str);
-	str = str.replace(' style=""', '').replace('<span class="close">\u00D7</span><span class="close">\u00D7</span>', '<span class="close">\u00D7</span>');
-	console.log(str);
-	store.setItem('myList', str);
+function buildPrimes() {
+	$('ul#frame-items li.hasPrime').each(function () {
+		var frameName = $(this).text();
+		$(this).after($(this).clone().text(frameName + ' Prime').addClass('isPrime'));
+	});
 }
 
-function buildList () {
-	var d = new Date();
-	var n = '' + d.getHours() + d.getMinutes();
-	$.getJSON('items.json?nocache=' + n, function(data) {
-		$.each(data['itemList'], function(key, data){
-			var compOf= '';
-			if (data['compOf']) {
-				var compAr = (data['compOf'])
-				$.each(compAr, function(i, l){
-					compOf += ', ' + l;
-				})
-				compOf = ' compOf="' + compOf.slice(2) + '"';
-			} else {
-				compOf = '';
-			}
-			$('ul#items').append('<li class="' + data['class'] + '"' + compOf + '>' + data['name'] + '</li>');
-		})
-	}).done(fixCSS);
-}
-
-function fixCSS () {
+function fixCSS() {
+	"use strict";
 	loadList();
 	stripes();
 	addUncheck();
@@ -199,6 +176,36 @@ function fixCSS () {
 	checkItem();
 	keySearch();
 	autoSelect();
-	sideNav();
-	filterNav();
+	subNav();
+	topNav();
+	buildPrimes();
+	$('a#weapon-link').parentsUntil('div').trigger('click');
 }
+
+function buildList(listName) {
+	"use strict";
+	var d = new Date().getHours.toString() + new Date().getMinutes().toString();
+	var itemList = listName + 'List';
+	$.getJSON(listName + '-items.json?nocache=' + d, function (data) {
+		$.each(data[itemList], function (key, data) {
+			var compOfStr = '';
+			if (data.compOf) {
+				var compAr = (data.compOf);
+				$.each(compAr, function (i, l) {
+					compOfStr += ', ' + l;
+				});
+				compOfStr = ' compOf="' + compOfStr.slice(2) + '"';
+			}
+
+			$('ul#' + listName + '-items').append('<li class="' + data['class'] + '"' + compOfStr + '>' + data.name + '</li>');
+		});
+	}).done(fixCSS);
+}
+
+$(document).ready(function () {
+	"use strict";
+	buildList('weapon');
+	buildList('frame');
+	$('div#version').text('v0.2.1');
+	topNav();
+});
