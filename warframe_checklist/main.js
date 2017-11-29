@@ -123,8 +123,13 @@ function addComponents() {
 	//compList.append(compSpan);
 	$.each(compList, function () {
 		var toolAttr = $(this).attr('compOf');
+<<<<<<< HEAD
 		var toolText = toolAttr.replace(/, /g, '<br>');
 		var toolLeng = (toolAttr.length - toolAttr.replace(/,/g, '').length + 9312).toString(16);
+=======
+		var toolText = toolAttr.replace(/, /g,'<hr>');
+		var toolLeng = (toolAttr.length - toolAttr.replace(/,/g,'').length + 9312).toString(16);
+>>>>>>> 46dc66f373e974ce602c609475049822826d4b40
 		var toolCirc = String.fromCodePoint(parseInt(toolLeng, 16));
 		$(this).append('<span class="component">' + toolCirc + '<span class="compTip">' + toolText + '</span></span>');
 	});
